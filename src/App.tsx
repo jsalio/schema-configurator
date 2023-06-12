@@ -1,26 +1,73 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import LoginScreen from './pages/login';
+import { Outlet, RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { ApplicationLayout } from './shared/layout';
+import { Dashboard } from './pages/Dashboard';
+import { Schema } from './pages/Schema';
+import { Configuration } from './pages/Configuration';
+import { Syncronization } from './pages/Sync';
+import { MapperList } from './pages/Schema/Sections/List';
+import { ImportSchema } from './pages/Schema/Sections/Import';
+import { MapSchema } from './pages/Schema/Sections/ManualMap';
 
-function App() {
+var router = createBrowserRouter([
+  {
+    path: "/",
+    element: <div>
+      <Outlet />
+    </div>,
+    children: [
+      {
+        path: "/app",
+        element: <div>
+          <ApplicationLayout>
+            <Outlet />
+          </ApplicationLayout>
+        </div>,
+        children: [
+          {
+            path: "dashboard",
+            element: <Dashboard />
+          },
+          {
+            path: "settings",
+            element: <Configuration />
+          },
+          {
+            path: "Schema",
+            element: <Schema />,
+            children: [
+              {
+                path: "",
+                element: <MapperList />
+              },
+              {
+                path: "import",
+                element: <ImportSchema />
+              },
+              {
+                path: "map",
+                element: <MapSchema />
+              }
+            ]
+          },
+          {
+            path: "syncronization",
+            element: <Syncronization />
+          }
+        ]
+      },
+      {
+        path: "/auth",
+        element:<LoginScreen />
+      }
+    ]
+  }
+]);
+
+
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <RouterProvider router={router} />
   );
 }
-
-export default App;
