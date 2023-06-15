@@ -1,13 +1,19 @@
 import React from "react";
+import { useAppNavigation } from "../../../utils/Navigator";
 
 
-export const createMenuItem = (label: string, icon: any, path: string, childre?: Array<{ label: string; icon: any; path: string; }>): any => {
+export const createMenuItem = (label: string, icon: any, path: string,navigate:(path:string) => void , childre?: Array<{ label: string; icon: any; path: string; }>): any => {
     return {
-        key: generateGuid(),
+        key: path,
         icon: React.createElement(icon),
         label,
-        children: childre ? childre.map((item) => createMenuItem(item.label, item.icon, item.path)) : undefined,
+        children: childre ? childre.map((item) => createMenuItem(item.label, item.icon, item.path,navigate)) : undefined,
         path: path,
+        onClick: () => {
+            if (!childre){
+                navigate(path);
+            } 
+        }
     };
 };
 

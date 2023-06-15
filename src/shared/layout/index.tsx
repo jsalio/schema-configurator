@@ -3,8 +3,15 @@ import Sider from "antd/es/layout/Sider";
 import { Header, Content, Footer } from "antd/es/layout/layout";
 import React from "react";
 import { menuItems } from "./components/menuItems";
+import { useAppNavigation } from "../../utils/Navigator";
 
 export const ApplicationLayout:React.FC<any> = (props) => {
+  const {navigateTo} = useAppNavigation();
+  const [path, setPath] = React.useState<string>('/dashboard');
+  const gotoPage = (path:string) => {
+    setPath(path);
+    navigateTo('/app'+path);
+  };
     const {
         token: { colorBgContainer },
       } = theme.useToken();
@@ -23,8 +30,9 @@ export const ApplicationLayout:React.FC<any> = (props) => {
       <Menu
         theme="dark"
         mode="inline"
-        defaultSelectedKeys={['4']}
-        items={menuItems}
+        defaultSelectedKeys={[path]}
+        selectedKeys={[path]}
+        items={menuItems(gotoPage)}
       />
     </Sider>
     <Layout>
