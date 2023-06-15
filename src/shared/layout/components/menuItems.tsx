@@ -2,7 +2,7 @@ import { UploadOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/i
 import { createMenuItem } from "./createMenuItem";
 
 
-export const menuItems = (navigate:(path:string) => void) => [
+export const menuItems = (navigate:(path:string) => void, translate:(key:string) => string) => [
     createMenuItem('Dashboard', UserOutlined, '/dashboard',navigate),
     createMenuItem('Schema', VideoCameraOutlined, '/schema',navigate, [
         { label: 'Maps', icon: UploadOutlined, path: '/schema/' },

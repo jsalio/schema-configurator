@@ -3,9 +3,12 @@ import LoginScreen from './pages/login';
 import { Outlet, RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { ApplicationLayout } from './shared/layout';
 import { Dashboard } from './pages/Dashboard';
-import { Syncronization, buildSynchronizerPath } from './pages/Sync';
+import { buildSynchronizerPath } from './pages/Sync';
 import { buildSettingSectionsPaths } from './pages/Configuration';
 import { buildSchemaPath } from './pages/Schema';
+import { ApplicationContext, IAppContext } from './Main/main.context';
+import { useTranslate } from './utils/i18n/useTranslate';
+import { useAppNavigation } from './utils/Navigator';
 
 var router = createBrowserRouter([
   {
@@ -33,18 +36,25 @@ var router = createBrowserRouter([
       },
       {
         path: "/auth",
-        element:<LoginScreen />
+        element: <LoginScreen />
       }
     ]
   }
 ]);
 
-
-
-
-
 export default function App() {
+  const {translate, changeLanguage: chageLanguage} = useTranslate();
+
+  let context:IAppContext={
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    router:() => useAppNavigation(),
+    translate:translate,
+    changeLanguage:chageLanguage
+  }
+
   return (
-    <RouterProvider router={router} />
+    <ApplicationContext.Provider value={context}>
+      <RouterProvider router={router} />
+    </ApplicationContext.Provider>
   );
 }

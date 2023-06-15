@@ -1,20 +1,24 @@
 import { Layout, Menu, theme } from "antd";
 import Sider from "antd/es/layout/Sider";
 import { Header, Content, Footer } from "antd/es/layout/layout";
-import React from "react";
+import React, { useContext } from "react";
 import { menuItems } from "./components/menuItems";
-import { useAppNavigation } from "../../utils/Navigator";
+import { ApplicationContext } from "../../Main/main.context";
 
 export const ApplicationLayout:React.FC<any> = (props) => {
-  const {navigateTo} = useAppNavigation();
   const [path, setPath] = React.useState<string>('/dashboard');
+  const {translate, router} = useContext(ApplicationContext);
+  const navigate = router()?.navigateTo;
+
   const gotoPage = (path:string) => {
     setPath(path);
-    navigateTo('/app'+path);
+    navigate?.call(null, '/app'+path);
   };
+
     const {
         token: { colorBgContainer },
       } = theme.useToken();
+
     return(     <Layout>
     <Sider
       breakpoint="lg"
@@ -32,7 +36,7 @@ export const ApplicationLayout:React.FC<any> = (props) => {
         mode="inline"
         defaultSelectedKeys={[path]}
         selectedKeys={[path]}
-        items={menuItems(gotoPage)}
+        items={menuItems(gotoPage, translate)}
       />
     </Sider>
     <Layout>
