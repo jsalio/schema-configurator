@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import { PageTitle } from "../../shared/PageTitle/Title";
+import { PageTitle } from "../../shared/components/PageTitle/Title";
 import { ImportSchema } from "./Sections/Import";
 import { MapperList } from "./Sections/List";
 import { MapSchema } from "./Sections/ManualMap";

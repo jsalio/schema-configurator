@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom"
-import { PageTitle } from "../../shared/PageTitle/Title"
+import { PageTitle } from "../../shared/components/PageTitle/Title"
 import { CredentialList } from "./Section/Credentials"
 import { MailingList } from "./Section/Mailing"
 import { RulesList } from "./Section/Rules"

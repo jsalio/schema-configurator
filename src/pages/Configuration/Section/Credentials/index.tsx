@@ -1,4 +1,4 @@
-import { PageTitle } from "../../../../shared/PageTitle/Title";
+import { PageTitle } from "../../../../shared/components/PageTitle/Title";
 
 export const CredentialList = () => {
     return (
